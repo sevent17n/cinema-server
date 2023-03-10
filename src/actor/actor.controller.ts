@@ -20,7 +20,7 @@ import { ActorDto } from "./actor.dto"
 @Controller("actor")
 export class ActorController {
   constructor(private readonly actorService: ActorService) {}
-  @Get("by-slug/:lug")
+  @Get("by-slug/:slug")
   async bySlug(@Param("slug") slug: string) {
     return this.actorService.bySlug(slug)
   }
