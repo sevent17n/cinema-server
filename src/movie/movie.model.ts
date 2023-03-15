@@ -16,7 +16,9 @@ export class Parameters {
 export class MovieModel extends TimeStamps {
   @IsNumber()
   year: number
+
   @IsNumber()
+  kinopoiskId: number
   duration: number
   @IsString()
   country: string

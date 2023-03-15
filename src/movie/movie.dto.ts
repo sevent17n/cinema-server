@@ -1,6 +1,7 @@
 import {
   IsArray,
   IsBoolean,
+  isNumber,
   IsNumber,
   IsObject,
   IsString
@@ -23,6 +24,9 @@ export class MovieDto {
 
   @IsString()
   title: string
+
+  @IsNumber()
+  kinopoiskId: number
 
   @IsObject()
   parameters?: Parameters

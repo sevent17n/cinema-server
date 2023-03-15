@@ -41,9 +41,9 @@ export class MovieService {
     return movie
   }
 
-  async getAll(searchTerm?: string) {
+  async getAll(searchTerm?: string, limit?: number, page?: number) {
     let options = {}
-    if (searchTerm) {
+    if (searchTerm || limit || (limit && page)) {
       options = {
         $or: [
           {
@@ -53,6 +53,8 @@ export class MovieService {
       }
     }
     return this.MovieModel.find(options)
+      .skip(page)
+      .limit(limit)
       .select("-updatedAt -__v")
       .sort({ createdAt: "desc" })
       .populate("actors genres")
@@ -73,6 +75,7 @@ export class MovieService {
       description: "",
       poster: "",
       title: "",
+      kinopoiskId: 1,
       videoUrl: "",
       slug: ""
     }
@@ -81,10 +84,6 @@ export class MovieService {
   }
 
   async update(_id: string, dto: MovieDto) {
-    if (!dto.isSendTelegram) {
-      await this.sendNotifications(dto)
-      dto.isSendTelegram = true
-    }
     const updateDoc = await this.MovieModel.findByIdAndUpdate(_id, dto, {
       new: true
     }).exec()

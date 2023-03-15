@@ -43,9 +43,14 @@ export class MovieController {
   }
 
   @Get()
-  async getAll(@Query("searchTerm") searchTerm?: string) {
-    return this.movieService.getAll(searchTerm)
+  async getAll(
+    @Query("searchTerm") searchTerm?: string,
+    @Query("limit") limit?: number,
+    @Query("page") page?: number
+  ) {
+    return this.movieService.getAll(searchTerm, limit, page)
   }
+
   @Get("most-popular")
   async mostPopular() {
     return this.movieService.getMostPopular()
