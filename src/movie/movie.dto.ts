@@ -1,7 +1,6 @@
 import {
   IsArray,
   IsBoolean,
-  isNumber,
   IsNumber,
   IsObject,
   IsString
@@ -25,8 +24,8 @@ export class MovieDto {
   @IsString()
   title: string
 
-  @IsNumber()
-  kinopoiskId: number
+  @IsString()
+  kinopoiskId: string
 
   @IsObject()
   parameters?: Parameters
@@ -45,7 +44,4 @@ export class MovieDto {
   @IsArray()
   @IsString({ each: true })
   actors: string[]
-
-  @IsBoolean()
-  isSendTelegram?: boolean
 }

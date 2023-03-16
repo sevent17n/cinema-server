@@ -6,9 +6,9 @@ import {
 import { InjectModel } from "nestjs-typegoose"
 import { MovieModel } from "./movie.model"
 import { ModelType } from "@typegoose/typegoose/lib/types"
-import { ActorDto } from "../actor/actor.dto"
 import { MovieDto } from "./movie.dto"
 import { Types } from "mongoose"
+import { isNumber } from "class-validator"
 
 @Injectable()
 export class MovieService {
@@ -31,14 +31,25 @@ export class MovieService {
     }
     return movie
   }
-  async byGenres(genreIds: Types.ObjectId[]) {
+  async byGenres(genreIds: Types.ObjectId[], limit?: number, page?: number) {
     const movie = await this.MovieModel.find({
       genres: { $in: genreIds }
-    }).exec()
+    })
+      .skip(page)
+      .limit(limit)
+      .exec()
     if (!movie) {
       throw new NotFoundException("Movie not found")
     }
     return movie
+  }
+  async getMostPopular(limit?: number, page?: number) {
+    return this.MovieModel.find({ countOpened: { $gt: 0 } })
+      .skip(page)
+      .limit(limit)
+      .sort({ countOpened: -1 })
+      .populate("genres")
+      .exec()
   }
 
   async getAll(searchTerm?: string, limit?: number, page?: number) {
@@ -75,7 +86,7 @@ export class MovieService {
       description: "",
       poster: "",
       title: "",
-      kinopoiskId: 1,
+      kinopoiskId: "",
       videoUrl: "",
       slug: ""
     }
@@ -113,12 +124,6 @@ export class MovieService {
     return deleteDoc
   }
 
-  async getMostPopular() {
-    return this.MovieModel.find({ countOpened: { $gt: 0 } })
-      .sort({ countOpened: -1 })
-      .populate("genres")
-      .exec()
-  }
   async UpdateRating(id: Types.ObjectId, newRating: number) {
     const rating = this.MovieModel.findByIdAndUpdate(
       id,

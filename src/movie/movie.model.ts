@@ -1,6 +1,6 @@
 import { Base, TimeStamps } from "@typegoose/typegoose/lib/defaultClasses"
 import { prop, Ref } from "@typegoose/typegoose"
-import { IsArray, IsBoolean, IsNumber, IsString } from "class-validator"
+import { IsNumber, IsString } from "class-validator"
 import { ActorModel } from "../actor/actor.model"
 import { GenreModel } from "../genre/genre.model"
 
@@ -17,7 +17,7 @@ export class MovieModel extends TimeStamps {
   @IsNumber()
   year: number
 
-  @IsNumber()
+  @prop({ default: 1 })
   kinopoiskId: number
   duration: number
   @IsString()
@@ -51,7 +51,4 @@ export class MovieModel extends TimeStamps {
 
   @prop({ ref: () => ActorModel })
   actors: Ref<ActorModel>[]
-
-  @prop({ default: false })
-  isSendTelegram?: boolean
 }

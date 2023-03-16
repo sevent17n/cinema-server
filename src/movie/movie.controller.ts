@@ -33,8 +33,12 @@ export class MovieController {
   @UsePipes(new ValidationPipe())
   @Post("by-genres")
   @HttpCode(200)
-  async byGenres(@Body("genreIds") genreIds: Types.ObjectId[]) {
-    return this.movieService.byGenres(genreIds)
+  async byGenres(
+    @Body("genreIds") genreIds: Types.ObjectId[],
+    @Query("limit") limit?: number,
+    @Query("page") page?: number
+  ) {
+    return this.movieService.byGenres(genreIds, limit, page)
   }
   @Put("update-count-opened")
   @HttpCode(200)
@@ -52,8 +56,11 @@ export class MovieController {
   }
 
   @Get("most-popular")
-  async mostPopular() {
-    return this.movieService.getMostPopular()
+  async mostPopular(
+    @Query("limit") limit?: number,
+    @Query("page") page?: number
+  ) {
+    return this.movieService.getMostPopular(limit, page)
   }
   @Get(":id")
   @Auth("admin")
