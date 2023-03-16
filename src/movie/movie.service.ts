@@ -39,7 +39,7 @@ export class MovieService {
       .limit(limit)
       .exec()
     if (!movie) {
-      throw new NotFoundException("Movie not found")
+      throw new NotFoundException("Movies not found")
     }
     return movie
   }
