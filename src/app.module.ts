@@ -6,14 +6,12 @@ import { TypegooseModule } from "nestjs-typegoose"
 import { getMongoDbConfig } from "./config/mongo.config"
 import { AuthModule } from "./auth/auth.module"
 import { UserModule } from "./user/user.module"
-import { JwtModule } from "@nestjs/jwt"
-import { getJWTConfig } from "./config/jwt.config"
-import { JwtStrategy } from "./auth/strategies/jwt.strategy"
 import { GenreModule } from "./genre/genre.module"
 import { FileModule } from "./file/file.module"
 import { ActorModule } from "./actor/actor.module"
 import { MovieModule } from "./movie/movie.module"
 import { RatingModule } from "./rating/rating.module"
+import { KinopoiskModule } from "./kinopoisk/kinopoisk.module"
 
 @Module({
   imports: [
@@ -29,7 +27,8 @@ import { RatingModule } from "./rating/rating.module"
     FileModule,
     ActorModule,
     MovieModule,
-    RatingModule
+    RatingModule,
+    KinopoiskModule
   ],
   controllers: [AppController],
   providers: [AppService]

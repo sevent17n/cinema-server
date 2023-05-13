@@ -8,7 +8,6 @@ import { MovieModel } from "./movie.model"
 import { ModelType } from "@typegoose/typegoose/lib/types"
 import { MovieDto } from "./movie.dto"
 import { Types } from "mongoose"
-import { isNumber } from "class-validator"
 
 @Injectable()
 export class MovieService {
@@ -87,7 +86,6 @@ export class MovieService {
       poster: "",
       title: "",
       kinopoiskId: "",
-      videoUrl: "",
       slug: ""
     }
     const movie = await this.MovieModel.create(defaultValue)

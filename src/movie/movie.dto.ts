@@ -35,8 +35,6 @@ export class MovieDto {
   @IsString()
   description: string
 
-  @IsString()
-  videoUrl: string
   @IsArray()
   @IsString({ each: true })
   genres: string[]
